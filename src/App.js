@@ -12,8 +12,12 @@ function App() {
   return (
     // <HomePage />
     <div>
+     
       <Route exact path='/' component={HomePage} />
       <Route  exact path='/hats' component={HatsPage} />
+      <Route path='/sneakers' component={TopicDetailsPage} />
+      <Route exact path='/mens' component={TopicsPage} />
+      <Route path='/womens' component={TopicsListPage} />
     </div>
   ); 
 }
@@ -21,18 +25,21 @@ function App() {
 export default App;
 
 const TopicDetailsPage = (props) => {
-  console.log(props); return (<div> <h1>Topic Details Page: {props.match.params.topicId}</h1></div>)}
+  // console.log(props);
+  return (<div> <h1>sneakers Page: {props.match.params.topicId}</h1></div>)
+}
 const TopicsPage = (props) => {
-  console.log(props); return (<div><Link to='/topics' >
-    Details
-      </Link><h1>Topics Page</h1></div>)
+  // console.log(props);
+  return (<div><Link to='/womens' >
+    Chicks
+      </Link><h1>Mens</h1></div>)
 }
 const TopicsListPage = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <div>
       
-      <h1>Topics List Page</h1>
+      <h1>Womens</h1>
     </div>)
 }
 
