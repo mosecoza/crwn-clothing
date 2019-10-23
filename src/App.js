@@ -1,24 +1,24 @@
 import React from 'react';
 import HomePage from './pages/homepage'
 import './App.css';
-import ShopPage from './pages/shop/shop'
+import Header from './components/header/header'
 import {
-  Route, Link 
+  Route, Link, Switch
 } from "react-router-dom";
 
 
 
 function App() {
   return (
-    // <HomePage />
     <div>
-     
+    <Header />
+    <Switch>
+    
       <Route exact path='/' component={HomePage} />
-      <Route  exact path='/hats' component={ShopPage} />
-      <Route path='/sneakers' component={TopicDetailsPage} />
+      {/* <Route path='/sneakers' component={TopicDetailsPage} />
       <Route exact path='/mens' component={TopicsPage} />
-      <Route path='/womens' component={TopicsListPage} />
-    </div>
+      <Route path='/womens' component={TopicsListPage} /> */}
+    </Switch></div>
   ); 
 }
 
