@@ -7,7 +7,7 @@ import {
   Route, Link, Switch
 } from "react-router-dom";
 import LoginPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
-import { auth } from './components/firebase/utils';
+import { auth, createUserProfileDocument } from './components/firebase/utils';
 
 
 class App extends React.Component {
@@ -18,14 +18,24 @@ class App extends React.Component {
 
   unSubscribeFromAuth = null;
   
-  componentWillUnmount() {
+  componentWillUnmount() { 
     this.unSubscribeFromAuth() 
   }
   componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      console.log('-user- ', user)
+    this.unSubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
-      this.setState({currentUser:user})
+       if(userAuth){ const userRef = await createUserProfileDocument(userAuth);
+
+          userRef.onSnapshot(snap => {
+            this.setState({ 
+              currentUser: {
+                id: snap.id,
+                ...snap.data()
+              }
+            }, ()=>console.log('setstate Final', this.state))
+          })
+       }
+      this.setState({currentUser:userAuth})
     })
   }
   
@@ -42,31 +52,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-const TopicDetailsPage = (props) => {
-  // console.log(props);
-  return (<div> <h1>sneakers Page: {props.match.params.topicId}</h1></div>)
-}
-const TopicsPage = (props) => {
-  // console.log(props);
-  return (<div><Link to='/womens' >
-    Chicks
-      </Link><h1>Mens</h1></div>)
-}
-const TopicsListPage = (props) => {
-  // console.log(props);
-  return (
-    <div>
-      
-      <h1>Womens</h1>
-    </div>)
-}
-
-const HatsPage = (props) => {
-  console.log(props);
-  return (
-    <div>
-
-      <h1>Hats Page</h1>
-    </div>)
-}
